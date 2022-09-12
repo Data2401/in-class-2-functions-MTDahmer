@@ -1,0 +1,122 @@
+---
+title: "In Class Lab"
+author: "Mitchell Dahmer"
+date: "DATA 2401"
+output: html_document
+---
+**Note: Your exam will be in a similar format to this (RMarkdown File with Questions and Code chunks for your answers), so make sure you have the process for knitting to html working.** 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## In Class Activity 
+
+1. Write a function to simulate rolling a 6-sided die and returns the result.
+
+```{r}
+roll_d6 <- function() {
+  sample(6,1)
+  
+}
+roll_d6()
+roll_d6()
+roll_d6()
+```
+
+
+
+1. Write a function to simulate rolling 2 6-sided dice that returns the sum of the rolls. 
+
+```{r}
+roll_2d6 <- function() {
+  roll <- sample(6,2)
+  sum(roll)
+}
+
+roll_2d6()
+roll_2d6()
+roll_2d6()
+```
+
+
+1. Write a function that takes two people name's as strings, simulates rolling a 6-sided die for each of the names, then returns the name of the person with the higher roll. The function should reroll once on a tie, but if there is a second tie, it should return "draw". 
+
+```{r}
+roll_off <- function(player1, player2) {
+  x <- player1
+  y <- player2
+  player1R <- sample(6,1)
+  player2R <- sample(6,1)
+  if (player1R == player2R) {
+    player1R <- sample(6,1)
+    player2R <- sample(6,1)
+  }
+  if (player1R > player2R) {
+    return (x)
+  }
+  else if (player1R < player2R) {
+    return (y)
+  }
+}
+
+roll_off("Mark", "Cindy")
+roll_off("Mark", "Cindy")
+roll_off("Mark", "Cindy")
+
+```
+
+
+2. Write a second function (you may start by modifying the first one) that takes two names as strings, simulates both of them rolling die 15 times, and returns the name of the person who "won" more rolls. Don't reroll ties this time, but don't count them as "wins". 
+
+```{r}
+roll_off15 <- function(player1, player2) {
+  x <- player1
+  y <- player2
+  tick <- 0
+  player1RC <- 0
+  player2RC <- 0
+  while(tick < 15) {
+    player1R <- sample(6,1)
+    player2R <- sample(6,1)
+    if (player1R > player2R) {player1RC <- player1RC +1}
+    else if (player1R < player2R) {player2RC <- player2RC +1}
+    tick <- tick+1
+  }
+  if (player1RC > player2RC) {return (x)}
+  else if (player1RC < player2RC) {return (y)}
+}
+
+roll_off15("Mark", "Cindy")
+roll_off15("Mark", "Cindy")
+roll_off15("Mark", "Cindy")
+
+```
+
+
+3. Modify your function from (2) so that the person in the first argument has a die that is weighted to get higher numbers more often (you may decide the actual percentage change). Run the function ten or so times. Does the second person ever win?
+
+```{r}
+roll_off15 <- function(player1, player2) {
+  x <- player1
+  y <- player2
+  tick <- 0
+  player1RC <- 0
+  player2RC <- 0
+  while(tick < 15) {
+    player1R <- sample(6,1,prob = c(1,2,3,4,5,6))
+    player2R <- sample(6,1)
+    if (player1R > player2R) {player1RC <- player1RC +1}
+    else if (player1R < player2R) {player2RC <- player2RC +1}
+    tick <- tick+1
+  }
+  if (player1RC > player2RC) {return (x)}
+  else if (player1RC < player2RC) {return (y)}
+}
+
+roll_off15("Mark", "Cindy")
+roll_off15("Mark", "Cindy")
+roll_off15("Mark", "Cindy")
+
+```
+
