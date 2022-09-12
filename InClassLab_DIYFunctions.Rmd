@@ -30,7 +30,7 @@ roll_d6()
 
 ```{r}
 roll_2d6 <- function() {
-  roll <- sample(6,2)
+  roll <- sample(6,2, replace = T)
   sum(roll)
 }
 

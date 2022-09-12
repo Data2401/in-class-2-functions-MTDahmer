@@ -379,81 +379,118 @@ working.</strong></p>
 <li>Write a function to simulate rolling a 6-sided die and returns the
 result.</li>
 </ol>
-<pre class="r"><code>roll &lt;- function(){
-  result &lt;- sample(1:6, 1)
-  return(result)
+<pre class="r"><code>roll_d6 &lt;- function() {
+  sample(6,1)
+  
 }
-
-roll()</code></pre>
-<pre><code>## [1] 3</code></pre>
+roll_d6()</code></pre>
+<pre><code>## [1] 6</code></pre>
+<pre class="r"><code>roll_d6()</code></pre>
+<pre><code>## [1] 4</code></pre>
+<pre class="r"><code>roll_d6()</code></pre>
+<pre><code>## [1] 4</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a function to simulate rolling 2 6-sided dice that returns the
 sum of the rolls.</li>
 </ol>
-<pre class="r"><code>roll_two &lt;- function(){
-  result &lt;- sample(1:6, 2, replace = T)
-  return(sum(result))
+<pre class="r"><code>roll_2d6 &lt;- function() {
+  roll &lt;- sample(6,2, replace = T)
+  sum(roll)
 }
 
-roll_two()</code></pre>
-<pre><code>## [1] 5</code></pre>
+roll_2d6()</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>roll_2d6()</code></pre>
+<pre><code>## [1] 10</code></pre>
+<pre class="r"><code>roll_2d6()</code></pre>
+<pre><code>## [1] 6</code></pre>
 <ol style="list-style-type: decimal">
 <li>Write a function that takes two people name’s as strings, simulates
 rolling a 6-sided die for each of the names, then returns the name of
 the person with the higher roll. The function should reroll once on a
 tie, but if there is a second tie, it should return “draw”.</li>
 </ol>
-<pre class="r"><code># Your one-roll function goes here
-game &lt;- function(person1, person2){
-  roll1 &lt;- sample(1:6, 1)
-  roll2 &lt;- sample(1:6, 1)
-  if (roll1 == roll2){
-    roll1 &lt;- sample(1:6, 1)
-    roll2 &lt;- sample(1:6, 1)
+<pre class="r"><code>roll_off &lt;- function(player1, player2) {
+  x &lt;- player1
+  y &lt;- player2
+  player1R &lt;- sample(6,1)
+  player2R &lt;- sample(6,1)
+  if (player1R == player2R) {
+    player1R &lt;- sample(6,1)
+    player2R &lt;- sample(6,1)
   }
-  
-  if (roll1 == roll2){
-    return(&quot;It&#39;s a draw&quot;)
-  } else if (roll1 &gt; roll2){
-    return(paste(person1, &quot;wins!&quot;))
-  } else {
-    return(paste(person2, &quot;wins!&quot;))
+  if (player1R &gt; player2R) {
+    return (x)
+  }
+  else if (player1R &lt; player2R) {
+    return (y)
   }
 }
 
-game(&quot;a&quot;, &quot;b&quot;)</code></pre>
-<pre><code>## [1] &quot;b wins!&quot;</code></pre>
+roll_off(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
+<pre class="r"><code>roll_off(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Cindy&quot;</code></pre>
+<pre class="r"><code>roll_off(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
 <li>Write a second function (you may start by modifying the first one)
 that takes two names as strings, simulates both of them rolling die 15
 times, and returns the name of the person who “won” more rolls. Don’t
 reroll ties this time, but don’t count them as “wins”.</li>
 </ol>
-<pre class="r"><code># Your 15-roll function goes here
-game_of_15 &lt;- function(person1, person2){
-  roll1 &lt;- sample(1:6, 15, replace = T)
-  roll2 &lt;- sample(1:6, 15, replace = T)
- 
-  sum1 &lt;- sum(roll1 &gt; roll2)
-  sum2 &lt;- sum(roll2 &gt; roll1)
-  if (sum1 == sum2){
-    return(&quot;It&#39;s a draw&quot;)
-  } else if (sum1 &gt; sum2){
-    return(paste(person1, &quot;wins!&quot;))
-  } else {
-    return(paste(person2, &quot;wins!&quot;))
+<pre class="r"><code>roll_off15 &lt;- function(player1, player2) {
+  x &lt;- player1
+  y &lt;- player2
+  tick &lt;- 0
+  player1RC &lt;- 0
+  player2RC &lt;- 0
+  while(tick &lt; 15) {
+    player1R &lt;- sample(6,1)
+    player2R &lt;- sample(6,1)
+    if (player1R &gt; player2R) {player1RC &lt;- player1RC +1}
+    else if (player1R &lt; player2R) {player2RC &lt;- player2RC +1}
+    tick &lt;- tick+1
   }
+  if (player1RC &gt; player2RC) {return (x)}
+  else if (player1RC &lt; player2RC) {return (y)}
 }
 
-game_of_15(&quot;a&quot;, &quot;b&quot;)</code></pre>
-<pre><code>## [1] &quot;b wins!&quot;</code></pre>
+roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
+<pre class="r"><code>roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Cindy&quot;</code></pre>
+<pre class="r"><code>roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Cindy&quot;</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Modify your function from (2) so that the person in the first
 argument has a die that is weighted to get higher numbers more often
 (you may decide the actual percentage change). Run the function ten or
 so times. Does the second person ever win?</li>
 </ol>
-<pre class="r"><code># Your &quot;cheating&quot; function goes here</code></pre>
+<pre class="r"><code>roll_off15 &lt;- function(player1, player2) {
+  x &lt;- player1
+  y &lt;- player2
+  tick &lt;- 0
+  player1RC &lt;- 0
+  player2RC &lt;- 0
+  while(tick &lt; 15) {
+    player1R &lt;- sample(6,1,prob = c(1,2,3,4,5,6))
+    player2R &lt;- sample(6,1)
+    if (player1R &gt; player2R) {player1RC &lt;- player1RC +1}
+    else if (player1R &lt; player2R) {player2RC &lt;- player2RC +1}
+    tick &lt;- tick+1
+  }
+  if (player1RC &gt; player2RC) {return (x)}
+  else if (player1RC &lt; player2RC) {return (y)}
+}
+
+roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
+<pre class="r"><code>roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
+<pre class="r"><code>roll_off15(&quot;Mark&quot;, &quot;Cindy&quot;)</code></pre>
+<pre><code>## [1] &quot;Mark&quot;</code></pre>
 </div>
 
 
